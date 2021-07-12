@@ -73,6 +73,25 @@ class RemoveNthNode {
     return;
   }
 
+  // 2 pointer approach
+
+  public void removeNthNodeEff(RemoveNthNode rn, int n) {
+    Node dummy = new Node(-1);
+    dummy.next = rn.head;
+    Node slow = dummy;
+    Node fast = dummy;
+    while (n >= 0) {
+      fast = fast.next;
+      n--;
+    }
+    while (fast != null) {
+      slow = slow.next;
+      fast = fast.next;
+    }
+    slow.next = slow.next.next;
+    rn.head = dummy.next;
+  }
+
   public static void main(String[] args) {
     RemoveNthNode rn = new RemoveNthNode();
     Scanner sc = new Scanner(System.in);
@@ -86,7 +105,8 @@ class RemoveNthNode {
     rn.printList(rn);
     System.out.print("Enter Nth from last node position: ");
     int p = sc.nextInt();
-    rn.removeNthNode(p, rn);
+    // rn.removeNthNode(p, rn);
+    rn.removeNthNodeEff(rn, p);
     rn.printList(rn);
     sc.close();
   }
