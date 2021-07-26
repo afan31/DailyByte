@@ -74,5 +74,6 @@ class RemoveValue {
     int p = sc.nextInt();
     rv.removeValue(rv, p);
     rv.printList(rv);
+    sc.close();
   }
 }
