@@ -10,9 +10,8 @@ class Node {
   }
 }
 
-class ContainsCycle {
+class ReverseList {
   Node head;
-  Node last;
 
   public void addNodeAtEnd(int d) {
     if (head == null) {
@@ -24,12 +23,7 @@ class ContainsCycle {
       curr = curr.next;
     }
     curr.next = new Node(d);
-    last = curr.next;
     return;
-  }
-
-  public void makeCircular() {
-    last.next = head;
   }
 
   public void printList() {
@@ -48,42 +42,47 @@ class ContainsCycle {
     System.out.println("]");
   }
 
-  public boolean isCyclePresent() {
-    if (head == null) {
-      return false;
+  public Node reverseList() {
+    Node previous = null;
+    while (head != null) {
+      Node next = head.next;
+      head.next = previous;
+      previous = head;
+      head = next;
     }
-    Node slow = head;
-    Node fast = head;
-    while (true) {
-      slow = slow.next;
-      if (fast.next != null) {
-        fast = fast.next.next;
-      } else {
-        return false;
-      }
-      if (fast == null || slow == null) {
-        return false;
-      }
-      if (fast.data == slow.data) {
-        return true;
-      }
+    return previous;
+  }
+
+  public void printListInReverse(Node prev) {
+    if (prev == null) {
+      System.out.println("Empty List");
     }
+    Node curr = prev;
+    System.out.print("[");
+    while (curr != null) {
+      System.out.print(curr.data);
+      if (curr.next != null) {
+        System.out.print(",");
+      }
+      curr = curr.next;
+    }
+    System.out.println("]");
   }
 
   public static void main(String[] args) {
-    ContainsCycle cc = new ContainsCycle();
+    ReverseList rl = new ReverseList();
     Scanner sc = new Scanner(System.in);
     System.out.println("Enter linked list length");
     int n = sc.nextInt();
     System.out.println("Enter linked list items");
     for (int i = 0; i < n; i++) {
       int d = sc.nextInt();
-      cc.addNodeAtEnd(d);
+      rl.addNodeAtEnd(d);
     }
-    cc.printList();
-    cc.makeCircular();
-    boolean ans = cc.isCyclePresent();
-    System.out.println(ans);
+    rl.printList();
+    Node prev = rl.reverseList();
+    System.out.println("Reversed elements in linked list");
+    rl.printListInReverse(prev);
     sc.close();
   }
 }
